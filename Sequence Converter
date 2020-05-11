@@ -7,11 +7,12 @@ dic={'D':'Asp','T':'Thr','S':'Ser','E':'Glu','P':'Pro','G':'Gly','A':'Ala','C':'
 #opens file and removes first line if it starts with >, for fafsta files
 with open('seq.txt') as file:
     read=file.readlines()
-    for lines in read:
+    for lines,x in zip(read,range(len(read))):
         if lines.startswith('>'):
-            sequence_file=read[1:]
+            sequence_file=read[(x+1):]
+            break
         else:
-            sequence_file=read
+            continue
 seq_file="".join(sequence_file)
 list=[]
 #converts single letter amino acid to 3-letter abbreviation and sorts it into a column
@@ -22,5 +23,6 @@ for amino_acid in seq_file:
     spacer=abr+'\n'
     list.append(spacer)
 joiner="".join(list)
+print(joiner)
 with open('seq_modified.txt', 'w') as f:
     f.write(joiner)
